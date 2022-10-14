@@ -1,13 +1,13 @@
-# Sample Hardhat Project
+# Uniswap V3 - Single Hop Swap
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+```
+npm --save-dev hardhat
+```
 
-Try running some of the following tasks:
+```
+npm i @uniswap/v3-periphery
+```
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.js
+```
+npx hardhat
 ```

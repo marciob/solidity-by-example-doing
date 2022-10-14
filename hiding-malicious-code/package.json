@@ -1,5 +1,5 @@
 {
-  "name": "uniswap-v3-swap",
+  "name": "hiding-malicious-code",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,10 +11,6 @@
   "license": "ISC",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",
-    "hardhat": "^2.11.2"
-  },
-  "dependencies": {
-    "@uniswap/v3-periphery": "^1.4.2",
-    "dotenv": "^16.0.3"
+    "hardhat": "^2.12.0"
   }
 }
