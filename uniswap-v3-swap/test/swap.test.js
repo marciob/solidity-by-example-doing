@@ -12,7 +12,7 @@ describe("SwapExamples", function () {
   let dai;
 
   before(async () => {
-    const accounts = await ethers.getSigners();
+    accounts = await ethers.getSigners();
 
     weth = await ethers.getContractAt("IWETH", WETH9);
     dai = await ethers.getContractAt("IERC20", DAI);
