@@ -1,30 +1,30 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8;
+pragma solidity ^0.8.13;
 
 contract StakingRewards {
-    IERC20 public immutable stakingToken; // instantiate erc20 token that will be staked
-    IERC20 public immutable rewardsToken; // instantiate erc20 token that will be distributed as reward
+    IERC20 public immutable stakingToken;
+    IERC20 public immutable rewardsToken;
 
     address public owner;
 
-    // Duration of rewards to be paid out (in seconds)
+    // duration to pay the rewards (in seconds)
     uint public duration;
-    // Timestamp of when the rewards finish
+    // when the rewards finish (timestamp)
     uint public finishAt;
-    // Minimum of last updated time and reward finish time
+    // last time the reward was updated
     uint public updatedAt;
-    // Reward to be paid out per second
+    // how much reward user will earn per second
     uint public rewardRate;
-    // Sum of (reward rate * dt * 1e18 / total supply)
+    // Sum of (reward rate * duration * 1e18 / total supply)
     uint public rewardPerTokenStored;
+    // tracks reward of each user
     // User address => rewardPerTokenStored
     mapping(address => uint) public userRewardPerTokenPaid;
+    // rewards that user earn
     // User address => rewards to be claimed
     mapping(address => uint) public rewards;
 
     // Total staked
-    // it increases anytime someone stake()
-    // it decreases anytime someone withdraw()
     uint public totalSupply;
     // User address => staked amount
     mapping(address => uint) public balanceOf;
@@ -40,6 +40,7 @@ contract StakingRewards {
         _;
     }
 
+    //
     modifier updateReward(address _account) {
         rewardPerTokenStored = rewardPerToken();
         updatedAt = lastTimeRewardApplicable();
@@ -81,7 +82,7 @@ contract StakingRewards {
         stakingToken.transfer(msg.sender, _amount);
     }
 
-    //returns how much rewards is available to withdraw
+    // returns the amount of rewards earned by an account
     function earned(address _account) public view returns (uint) {
         return
             ((balanceOf[_account] *
@@ -89,7 +90,7 @@ contract StakingRewards {
             rewards[_account];
     }
 
-    // withdraws the rewards and update the rewards balance
+    // claims rewards
     function getReward() external updateReward(msg.sender) {
         uint reward = rewards[msg.sender];
         if (reward > 0) {
@@ -103,6 +104,7 @@ contract StakingRewards {
         duration = _duration;
     }
 
+    // sets the amount rate
     function notifyRewardAmount(uint _amount)
         external
         onlyOwner
